@@ -1,0 +1,13 @@
+services:
+  proboticists_ros2:
+    build: .
+    container_name: proboticists_ros2
+    stdin_open: true
+    tty: true
+    network_mode: host
+    environment:
+      - DISPLAY=${DISPLAY}
+    working_dir: /home/ros2_ws
+    volumes:
+      - .:/home/ros2_ws
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
