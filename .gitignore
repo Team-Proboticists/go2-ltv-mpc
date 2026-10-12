@@ -1,0 +1,23 @@
+# ROS 2 Build directories
+build/
+install/
+log/
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+
+# IDE & Editor configs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Core dumps and logs
+core
+core.*
+*.log
