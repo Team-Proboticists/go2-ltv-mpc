@@ -55,9 +55,6 @@ ros2 run go2_simple_joint_control joint_command_publisher
 Students can write their own ROS 2 publisher nodes in Python to publish 12 joint values to `/joint_commands` based on kinematics equations or trajectory schedules. See [joint_command_publisher.py](go2_simple_joint_control/joint_command_publisher.py) for a complete template.
 
 ## 3. Advanced Walking and Balance Control Nodes
-
-We have added new control nodes as educational templates for walking, active balancing, and force control:
-
 ### A. Keyboard Teleoperation (`keyboard_teleop`)
 * **File:** [keyboard_teleop.py](go2_simple_joint_control/keyboard_teleop.py)
 * **What it does:** Reads keypresses from the terminal and publishes body velocity command targets (`/cmd_vel`) and tuning adjustments (`/teleop_aux`: height and pitch).
@@ -80,29 +77,4 @@ We have added new control nodes as educational templates for walking, active bal
 * **How to run:**
   ```bash
   ros2 run go2_simple_joint_control gait_generator
-  ```
-
-### C. Active IMU Balance Controller (`imu_balance_controller`)
-* **File:** [imu_balance_controller.py](go2_simple_joint_control/imu_balance_controller.py)
-* **What it does:** 
-  1. Subscribes to raw walking joint angles from `/gait_joint_commands` (students should run `gait_generator` remapped to `/gait_joint_commands`).
-  2. Subscribes to `/trunk_imu` to read body roll, pitch, and angular velocities.
-  3. Uses **Forward Kinematics (FK)** to compute the current $(x, y, z)$ positions of the feet relative to the hip.
-  4. Runs a PD/PID controller to adjust foot height offsets ($\Delta z$) to stabilize body roll and pitch errors.
-  5. Computes corrected joint angles using **Inverse Kinematics (IK)** and publishes to `/joint_commands`.
-* **Students can edit:** Tune the PID gains `kp_roll_`, `kd_roll_`, `kp_pitch_`, `kd_pitch_` inside the python code to balance the robot.
-* **How to run:**
-  ```bash
-  # Step 1: Run gait generator publishing to gait commands
-  ros2 run go2_simple_joint_control gait_generator --ros-args --remap /joint_commands:=/gait_joint_commands
-  # Step 2: Run active balancing node that intercepts and outputs to /joint_commands
-  ros2 run go2_simple_joint_control imu_balance_controller
-  ```
-
-### D. Stance Force Controller (`stance_force_controller`)
-* **File:** [stance_force_controller.py](go2_simple_joint_control/stance_force_controller.py)
-* **What it does:** Demonstrates **Virtual Model Control (VMC)**. It calculates the analytical 3x3 **Jacobian Matrix ($J$)** for each leg, computes a virtual force vector $F = [F_x, F_y, F_z]^T$ needed on each foot to maintain height and balance, and uses the Jacobian Transpose relation ($\tau = J^T F$) to map foot forces to joint torques (efforts).
-* **How to run:**
-  ```bash
-  ros2 run go2_simple_joint_control stance_force_controller
   ```
