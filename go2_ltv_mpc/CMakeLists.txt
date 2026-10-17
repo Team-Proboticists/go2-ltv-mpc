@@ -25,5 +25,17 @@ install(DIRECTORY include/
 )
 
 ament_export_include_directories(include)
+add_executable(mpc_solver_node
+  src/mpc_solver_node.cpp
+)
 
+ament_target_dependencies(mpc_solver_node
+  rclcpp
+  std_msgs
+)
+
+install(TARGETS
+  mpc_solver_node
+  DESTINATION lib/${PROJECT_NAME}
+)
 ament_package()
