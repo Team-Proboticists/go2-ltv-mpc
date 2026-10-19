@@ -63,7 +63,7 @@
         <mu2>0.2</mu2>
         <self_collide>1</self_collide>
     </gazebo>
-    <gazebo reference="FL_foot_link">
+    <gazebo reference="LF_foot">
         <mu1>0.6</mu1>
         <mu2>0.6</mu2>
         <self_collide>1</self_collide>
@@ -88,7 +88,7 @@
         <mu2>0.2</mu2>
         <self_collide>1</self_collide>
     </gazebo>
-    <gazebo reference="FR_foot_link">
+    <gazebo reference="RF_foot">
         <mu1>0.6</mu1>
         <mu2>0.6</mu2>
         <self_collide>1</self_collide>
@@ -113,7 +113,7 @@
         <mu2>0.2</mu2>
         <self_collide>1</self_collide>
     </gazebo>
-    <gazebo reference="LR_foot_link">
+    <gazebo reference="LR_foot">
         <mu1>0.6</mu1>
         <mu2>0.6</mu2>
         <self_collide>1</self_collide>
@@ -138,12 +138,56 @@
         <mu2>0.2</mu2>
         <self_collide>1</self_collide>
     </gazebo>
-    <gazebo reference="RR_foot_link">
+    <gazebo reference="RR_foot">
         <mu1>0.6</mu1>
         <mu2>0.6</mu2>
         <self_collide>1</self_collide>
         <kp>10000.0</kp>
         <kd>1.0</kd>
     </gazebo>
+    <!-- Gazebo Fortress foot contact sensors -->
 
+<gazebo reference="LF_foot">
+  <sensor name="LF_contact" type="contact">
+    <always_on>true</always_on>
+    <update_rate>100</update_rate>
+    <topic>/go2/LF_contact</topic>
+    <contact>
+      <collision>LF_calf_fixed_joint_lump__LF_foot_collision_1</collision>
+    </contact>
+  </sensor>
+</gazebo>
+
+<gazebo reference="RF_foot">
+  <sensor name="RF_contact" type="contact">
+    <always_on>true</always_on>
+    <update_rate>100</update_rate>
+    <topic>/go2/RF_contact</topic>
+    <contact>
+      <collision>RF_calf_fixed_joint_lump__RF_foot_collision_1</collision>
+    </contact>
+  </sensor>
+</gazebo>
+
+<gazebo reference="LR_foot">
+  <sensor name="LR_contact" type="contact">
+    <always_on>true</always_on>
+    <update_rate>100</update_rate>
+    <topic>/go2/LR_contact</topic>
+    <contact>
+      <collision>LR_calf_fixed_joint_lump__LR_foot_collision_1</collision>
+    </contact>
+  </sensor>
+</gazebo>
+
+<gazebo reference="RR_foot">
+  <sensor name="RR_contact" type="contact">
+    <always_on>true</always_on>
+    <update_rate>100</update_rate>
+    <topic>/go2/RR_contact</topic>
+    <contact>
+      <collision>RR_calf_fixed_joint_lump__RR_foot_collision_1</collision>
+    </contact>
+  </sensor>
+</gazebo>
 </robot>

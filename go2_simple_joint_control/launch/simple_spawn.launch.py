@@ -11,7 +11,7 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 def generate_launch_description():
     # Get share directory of go2_description
     go2_desc_share = get_package_share_directory('go2_description')
-    
+
     # Process the xacro file dynamically at launch time
     import xacro
     xacro_path = os.path.join(go2_desc_share, 'urdf', 'go2_description.urdf.xacro')
@@ -82,18 +82,18 @@ def generate_launch_description():
             PythonLaunchDescriptionSource(
                 [PathJoinSubstitution([FindPackageShare('ros_gz_sim'), 'launch', 'gz_sim.launch.py'])]),
             launch_arguments=[('gz_args', LaunchConfiguration('gz_args'))]),
-            
+
         # Start GZ Parameter Bridge for Clock and IMU
         Node(
             package='ros_gz_bridge',
             executable='parameter_bridge',
             arguments=[
-                '/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock',
-                '/imu/data@sensor_msgs/msg/Imu[gz.msgs.IMU'
-            ],
-            remappings=[
-                ('/imu/data', '/trunk_imu')
-            ],
+    '/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock',
+    '/imu@sensor_msgs/msg/Imu[gz.msgs.IMU'
+],
+remappings=[
+    ('/imu', '/trunk_imu')
+],
             output='screen'
         ),
 
