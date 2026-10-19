@@ -1,3 +1,4 @@
+
 from setuptools import find_packages, setup
 
 package_name = 'go2_state_estimation'
@@ -23,8 +24,10 @@ setup(
         ],
     },
     entry_points={
-        'console_scripts': [
-            'state_estimator_node = go2_state_estimation.state_estimator_node:main'
-        ],
-    },
+    'console_scripts': [
+        'state_estimator_node = go2_state_estimation.state_estimator_node:main',
+        'foot_position_node = go2_state_estimation.foot_position_node:main',
+        'contact_state_node = go2_state_estimation.contact_state_node:main',
+    ],
+},
 )
