@@ -25,12 +25,12 @@ int main()
     InputMatrix B = InputMatrix::Zero();
 
     // Simple position-velocity relationship
-    A(3, 9) = 0.02;
-    A(4, 10) = 0.02;
-    A(5, 11) = 0.02;
+    A(0, 3) = 0.02;
+    A(1, 4) = 0.02;
+    A(2, 5) = 0.02;
 
     // Simple force-to-velocity relationship
-    B.block<3, 3>(9, 0) =
+    B.block<3, 3>(3, 0) =
         Eigen::Matrix3d::Identity() * 0.02;
 
     PredictionModel constant_model(horizon);
@@ -87,10 +87,10 @@ int main()
         A_sequence[k] = A;
         B_sequence[k] = B;
 
-        A_sequence[k](3, 9) =
+        A_sequence[k](0, 3) =
             0.02 + 0.001 * k;
 
-        B_sequence[k](9, 0) =
+        B_sequence[k](3, 0) =
             0.02 + 0.002 * k;
     }
 
@@ -103,8 +103,8 @@ int main()
     Eigen::VectorXd x0 =
         Eigen::VectorXd::Zero(nx);
 
-    x0(3) = 1.0;
-    x0(9) = 0.5;
+    x0(0) = 1.0;
+    x0(3) = 0.5;
 
     // Input sequence
     Eigen::VectorXd U =

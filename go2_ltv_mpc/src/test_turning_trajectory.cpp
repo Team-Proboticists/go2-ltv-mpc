@@ -36,13 +36,13 @@ int main()
 
     StateVector x = StateVector::Zero();
 
-    x(5) = 0.30;
+    x(2) = 0.30;
 
     // Initial yaw angular velocity
-    x(8) = 0.20;
+    x(11) = 0.20;
 
     // Gravity
-    x(12) = -9.81;
+    x(12) = 9.81;
 
     // ==========================================
     // 3. Fixed world-frame foot positions
@@ -100,9 +100,9 @@ int main()
 
         std::cout
             << "Step " << k + 1
-            << " | Yaw: " << x(2)
-            << " | Height: " << x(5)
-            << " | Yaw rate: " << x(8)
+            << " | Yaw: " << x(8)
+            << " | Height: " << x(2)
+            << " | Yaw rate: " << x(11)
             << "\n";
     }
 

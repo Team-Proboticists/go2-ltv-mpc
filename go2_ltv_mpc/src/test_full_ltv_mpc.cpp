@@ -44,15 +44,15 @@ int main()
     LTV_MPC::StateVector x0 =
         LTV_MPC::StateVector::Zero();
 
-    // Assumed state ordering:
-    // [roll, pitch, yaw,
-    //  x, y, z,
-    //  wx, wy, wz,
+    // State ordering (Puneet's EKF):
+    // [x, y, z,
     //  vx, vy, vz,
+    //  roll, pitch, yaw,
+    //  wx, wy, wz,
     //  gravity]
 
-    x0(5) = 0.30;
-    x0(12) = -9.81;
+    x0(2) = 0.30;
+    x0(12) = 9.81;
 
     // ==========================================
     // 4. Foot positions relative to COM
@@ -85,7 +85,7 @@ for (int k = 0; k < horizon; ++k)
     LTV_MPC::StateVector predicted_state = x0;
 
     // Slowly changing yaw angle
-    predicted_state(2) = 0.02 * k;
+    predicted_state(8) = 0.02 * k;
 
     // Illustrative foot-position variation
     auto predicted_feet = feet;
@@ -154,23 +154,23 @@ std::cout << "H: "
     Eigen::MatrixXd R =
         Eigen::MatrixXd::Identity(nu, nu);
 
-    Q(0, 0) = 50.0;
-    Q(1, 1) = 50.0;
-    Q(2, 2) = 10.0;
+    Q(0, 0) = 20.0;   // X position
+    Q(1, 1) = 20.0;   // Y position
+    Q(2, 2) = 100.0;  // Z position
 
-    Q(3, 3) = 20.0;
-    Q(4, 4) = 20.0;
-    Q(5, 5) = 100.0;
+    Q(3, 3) = 10.0;   // X velocity
+    Q(4, 4) = 10.0;   // Y velocity
+    Q(5, 5) = 10.0;   // Z velocity
 
-    Q(6, 6) = 5.0;
-    Q(7, 7) = 5.0;
-    Q(8, 8) = 5.0;
+    Q(6, 6) = 50.0;   // Roll
+    Q(7, 7) = 50.0;   // Pitch
+    Q(8, 8) = 10.0;   // Yaw
 
-    Q(9, 9) = 10.0;
-    Q(10, 10) = 10.0;
-    Q(11, 11) = 10.0;
+    Q(9, 9) = 5.0;    // X angular velocity
+    Q(10, 10) = 5.0;  // Y angular velocity
+    Q(11, 11) = 5.0;  // Z angular velocity
 
-    Q(12, 12) = 1.0;
+    Q(12, 12) = 1.0;  // Gravity
 
     R *= 0.001;
     // ==========================================
@@ -292,10 +292,10 @@ std::cout << "Rbar: "
     Eigen::VectorXd X_pred = P * x0 + H * U;
 
     std::cout << "\nInitial height: "
-              << x0(5) << "\n";
+              << x0(2) << "\n";
 
     std::cout << "Predicted height after horizon: "
-              << X_pred((horizon - 1) * nx + 5)
+              << X_pred((horizon - 1) * nx + 2)
               << "\n";
 
     std::cout << "\nFULL MPC TEST PASSED!\n";

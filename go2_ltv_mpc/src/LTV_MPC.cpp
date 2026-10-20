@@ -55,10 +55,10 @@ void LTV_MPC::computeContinuousDynamics(
     B_c_.setZero();
 
     // State:
-    // [rpy, position, angular_velocity,
-    //  linear_velocity, gravity]
+    // [position, linear_velocity, rpy,
+    //  angular_velocity, gravity]
 
-    const double yaw = state(2);
+    const double yaw = state(8);
 
     // Rotation about Z axis
     Eigen::Matrix3d Rz;
@@ -68,13 +68,13 @@ void LTV_MPC::computeContinuousDynamics(
           0.0,            0.0,           1.0;
 
     // Orientation dynamics
-    A_c_.block<3,3>(0,6) = Rz.transpose();
+    A_c_.block<3,3>(6,9) = Rz.transpose();
 
     // Position dynamics
-    A_c_.block<3,3>(3,9).setIdentity();
+    A_c_.block<3,3>(0,3).setIdentity();
 
     // Gravity contribution
-    A_c_(11,12) = 1.0;
+    A_c_(5,12) = -1.0;
 
     // Inertia in world frame
     Eigen::Matrix3d I_world =
@@ -89,11 +89,11 @@ void LTV_MPC::computeContinuousDynamics(
         int col = leg * 3;
 
         // Angular acceleration contribution
-        B_c_.block<3,3>(6,col) =
+        B_c_.block<3,3>(9,col) =
             I_inv * skew(foot_positions[leg]);
 
         // Linear acceleration contribution
-        B_c_.block<3,3>(9,col) =
+        B_c_.block<3,3>(3,col) =
             Eigen::Matrix3d::Identity() / mass_;
     }
 }

@@ -32,8 +32,8 @@ int main()
     LTV_MPC::StateVector x =
         LTV_MPC::StateVector::Zero();
 
-    x(5) = 0.30;
-    x(12) = -9.81;
+    x(2) = 0.30;
+    x(12) = 9.81;
 
     // ==========================================
     // 3. Foot positions relative to COM
@@ -90,9 +90,9 @@ int main()
 
         std::cout
             << "Step " << k + 1
-            << " | Height: " << x(5)
-            << " | Vertical velocity: " << x(11)
-            << " | Yaw: " << x(2)
+            << " | Height: " << x(2)
+            << " | Vertical velocity: " << x(5)
+            << " | Yaw: " << x(8)
             << "\n";
     }
 
@@ -101,10 +101,10 @@ int main()
     // ==========================================
 
     const double height_error =
-        std::abs(x(5) - 0.30);
+        std::abs(x(2) - 0.30);
 
     const double velocity_error =
-        std::abs(x(11));
+        std::abs(x(5));
 
     std::cout << "\nFinal height error: "
               << height_error << "\n";

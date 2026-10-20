@@ -29,8 +29,8 @@ int main()
     LTV_MPC::StateVector x0 =
         LTV_MPC::StateVector::Zero();
 
-    x0(5) = 0.30;
-    x0(12) = -9.81;
+    x0(2) = 0.30;
+    x0(12) = 9.81;
 
     std::array<Eigen::Vector3d, 4> feet = {
         Eigen::Vector3d( 0.20,  0.10, -0.30),

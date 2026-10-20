@@ -37,8 +37,8 @@ int main()
 
     StateVector x0 = StateVector::Zero();
 
-    x0(5) = 0.30;
-    x0(12) = -9.81;
+    x0(2) = 0.30;
+    x0(12) = 9.81;
 
     // ==========================================
     // 3. Foot positions relative to COM
@@ -70,7 +70,7 @@ int main()
         StateVector predicted_state = x0;
 
         // Illustrative predicted yaw trajectory
-        predicted_state(2) = 0.05 * k;
+        predicted_state(8) = 0.05 * k;
 
         // Illustrative foot geometry variation
         auto predicted_feet = feet;

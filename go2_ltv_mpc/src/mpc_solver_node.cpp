@@ -37,11 +37,11 @@ public:
             Eigen::Matrix<double, 13, 13>::Identity();
 
         Q.diagonal() <<
-            50.0, 50.0, 50.0,    // Orientation
             10.0, 10.0, 1000.0,  // Position
-            1.0, 1.0, 1.0,       // Angular velocity
             1.0, 1.0, 10.0,      // Linear velocity
-            0.0;                 // Gravity state
+            50.0, 50.0, 50.0,   // Orientation
+            1.0, 1.0, 1.0,      // Angular velocity
+            0.0;                // Gravity state
 
         Eigen::Matrix<double, 12, 12> R =
             Eigen::Matrix<double, 12, 12>::Identity() * 0.001;
@@ -185,7 +185,7 @@ private:
 
         // The 13th state represents gravity.
         // Enforce the expected world-frame convention.
-        if (std::abs(robot_state_(12) + 9.81) > 0.1)
+        if (std::abs(robot_state_(12) - 9.81) > 0.1)
         {
             state_received_ = false;
             RCLCPP_WARN(
@@ -412,10 +412,10 @@ RCLCPP_INFO_THROTTLE(
             LTV_MPC::StateVector reference =
                 LTV_MPC::StateVector::Zero();
 
-            reference(3) = robot_state_(3);
-            reference(4) = robot_state_(4);
-            reference(5) = 0.30;
-            reference(12) = -9.81;
+            reference(0) = robot_state_(0);
+            reference(1) = robot_state_(1);
+            reference(2) = 0.30;
+            reference(12) = 9.81;
 
             for (int k = 0; k < HORIZON; ++k)
             {

@@ -84,6 +84,81 @@ install(
 )
 
 # ==========================================
+# Standalone numerical tests
+# ==========================================
+
+add_executable(test_nominal_trajectory
+  src/test_nominal_trajectory.cpp
+  src/LTV_MPC.cpp
+)
+
+target_include_directories(test_nominal_trajectory PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+target_link_libraries(test_nominal_trajectory
+  Eigen3::Eigen
+)
+
+add_executable(test_turning_trajectory
+  src/test_turning_trajectory.cpp
+  src/LTV_MPC.cpp
+  src/PredictionModel.cpp
+)
+
+target_include_directories(test_turning_trajectory PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+target_link_libraries(test_turning_trajectory
+  Eigen3::Eigen
+)
+
+# ==========================================
+# Nominal OSQP optimization test
+# ==========================================
+
+add_executable(test_nominal_osqp
+  src/test_nominal_osqp.cpp
+  src/LTV_MPC.cpp
+  src/PredictionModel.cpp
+  src/MPCCost.cpp
+  src/MPCConstraints.cpp
+  src/QPSolver.cpp
+)
+
+target_include_directories(test_nominal_osqp PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}/include
+  ${OSQP_INCLUDE_DIR}
+)
+
+target_link_libraries(test_nominal_osqp
+  Eigen3::Eigen
+  ${OSQP_LIBRARY}
+)
+
+
+
+add_executable(test_full_ltv_mpc
+  src/test_full_ltv_mpc.cpp
+  src/LTV_MPC.cpp
+  src/PredictionModel.cpp
+  src/MPCCost.cpp
+  src/MPCConstraints.cpp
+  src/QPSolver.cpp
+)
+
+target_include_directories(test_full_ltv_mpc PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}/include
+  ${OSQP_INCLUDE_DIR}
+)
+
+target_link_libraries(test_full_ltv_mpc
+  Eigen3::Eigen
+  ${OSQP_LIBRARY}
+)
+
+# ==========================================
 # Testing
 # ==========================================
 
